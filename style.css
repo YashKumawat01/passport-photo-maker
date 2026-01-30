@@ -221,3 +221,27 @@ a#download:hover {
     height: 210px;
   }
 }
+
+/* Upload section wrapper */
+.upload-wrapper {
+  width: 100%;
+  margin-bottom: 20px; /* SPACE BELOW BUTTON */
+}
+
+/* Upload button */
+.upload-btn {
+  width: 100%;               /* SAME WIDTH AS OTHER SECTIONS */
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  background: #ff0101;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background: #c30303;
+}
+

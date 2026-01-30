@@ -36,7 +36,7 @@ const PAD_Y = (OUTER_H - INNER_H) / 2;
 const BORDER_PX = (0.5 / 25.4) * DPI;
 
 // ================= IMAGE LOAD =================
-upload.addEventListener("change", e => {
+upload.addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
@@ -76,15 +76,7 @@ function drawPassportPreview() {
   pCtx.fillRect(0, 0, INNER_W, INNER_H);
 
   // Image
-  drawImageManual(
-    pCtx,
-    img,
-    INNER_W,
-    INNER_H,
-    zoom,
-    offsetX,
-    offsetY
-  );
+  drawImageManual(pCtx, img, INNER_W, INNER_H, zoom, offsetX, offsetY);
 
   // Border
   pCtx.strokeStyle = "#000";
@@ -93,8 +85,9 @@ function drawPassportPreview() {
 }
 
 // ================= LIVE CONTROLS =================
-[zoomInput, offsetXInput, offsetYInput, bgColorInput]
-  .forEach(el => el.addEventListener("input", drawPassportPreview));
+[zoomInput, offsetXInput, offsetYInput, bgColorInput].forEach((el) =>
+  el.addEventListener("input", drawPassportPreview),
+);
 
 // ================= A4 GENERATION =================
 document.getElementById("generateBtn").addEventListener("click", () => {
@@ -127,7 +120,6 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-
       const x = startX + c * OUTER_W;
       const y = startY + r * OUTER_H;
 
@@ -135,57 +127,39 @@ document.getElementById("generateBtn").addEventListener("click", () => {
       ctx.fillStyle = "#fff";
       ctx.fillRect(x, y, OUTER_W, OUTER_H);
 
+      // OUTER BORDER (DEPLOY SAFE)
+      ctx.strokeStyle = "#000000";
       ctx.lineWidth = BORDER_PX;
-      ctx.strokeStyle = "#000";
+
       ctx.strokeRect(
-        x + BORDER_PX / 2,
-        y + BORDER_PX / 2,
-        OUTER_W - BORDER_PX,
-        OUTER_H - BORDER_PX
+        x + BORDER_PX,
+        y + BORDER_PX,
+        OUTER_W - BORDER_PX * 2,
+        OUTER_H - BORDER_PX * 2,
       );
 
       // Inner background
       ctx.fillStyle = bgColor;
-      ctx.fillRect(
-        x + PAD_X,
-        y + PAD_Y,
-        INNER_W,
-        INNER_H
-      );
+      ctx.fillRect(x + PAD_X, y + PAD_Y, INNER_W, INNER_H);
 
       // Image (CLIPPED TO INNER BOX)
-ctx.save();
-ctx.translate(x + PAD_X, y + PAD_Y);
+      ctx.save();
+      ctx.translate(x + PAD_X, y + PAD_Y);
 
-// CLIP to passport photo area
-ctx.beginPath();
-ctx.rect(0, 0, INNER_W, INNER_H);
-ctx.clip();
+      // CLIP to passport photo area
+      ctx.beginPath();
+      ctx.rect(0, 0, INNER_W, INNER_H);
+      ctx.clip();
 
-// Draw image using SAME math as preview
-drawImageManual(
-  ctx,
-  img,
-  INNER_W,
-  INNER_H,
-  zoom,
-  offsetX,
-  offsetY
-);
+      // Draw image using SAME math as preview
+      drawImageManual(ctx, img, INNER_W, INNER_H, zoom, offsetX, offsetY);
 
-ctx.restore();
+      ctx.restore();
 
-// INNER IMAGE BORDER (VERY THIN)
-ctx.lineWidth = 1; // thin, print-safe
-ctx.strokeStyle = "#000000";
-ctx.strokeRect(
-  x + PAD_X,
-  y + PAD_Y,
-  INNER_W,
-  INNER_H
-);
-
-
+      // INNER IMAGE BORDER (VERY THIN)
+      ctx.lineWidth = 1; // thin, print-safe
+      ctx.strokeStyle = "#000000";
+      ctx.strokeRect(x + PAD_X, y + PAD_Y, INNER_W, INNER_H);
     }
   }
 
@@ -194,7 +168,13 @@ ctx.strokeRect(
   previewCanvas.height = A4_HEIGHT / 4;
 
   previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-  previewCtx.drawImage(a4Canvas, 0, 0, previewCanvas.width, previewCanvas.height);
+  previewCtx.drawImage(
+    a4Canvas,
+    0,
+    0,
+    previewCanvas.width,
+    previewCanvas.height,
+  );
 
   downloadLink.href = a4Canvas.toDataURL("image/png");
 });
@@ -211,7 +191,7 @@ document.getElementById("exportPdfBtn").addEventListener("click", () => {
   const pdf = new jsPDF({
     orientation: "portrait",
     unit: "mm",
-    format: "a4"
+    format: "a4",
   });
 
   pdf.addImage(downloadLink.href, "PNG", 0, 0, 210, 297);

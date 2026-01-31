@@ -1,130 +1,114 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Passport Photo Tool</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Passport Photo Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-  <body>
-    <h2>Passport Photo Maker – A4 Sheet</h2>
+<body>
+  <h2>Passport Photo Maker – A4 Sheet</h2>
 
-    <div class="main-container">
-      <!-- Left Column: Controls -->
-      <div class="controls">
-        <!-- Upload Section -->
-        <div class="upload-wrapper">
-          <input type="file" id="upload" accept="image/*" hidden />
-          <button id="uploadBtn" class="upload-btn">Upload Photo</button>
-        </div>
+  <div class="main-container">
 
-        <!-- Size & Layout Section -->
-        <div class="card">
-          <h4>Photo Dimensions & Layout</h4>
+    <!-- LEFT -->
+    <div class="controls">
 
-          <div class="row">
-            <div class="field">
-              <label>Width (cm)</label>
-              <input type="number" id="widthCm" value="3.3" step="0.1" />
-            </div>
-            <div class="field">
-              <label>Height (cm)</label>
-              <input type="number" id="heightCm" value="4.3" step="0.1" />
-            </div>
+      <!-- Upload -->
+      <div class="upload-wrapper">
+        <input type="file" id="upload" accept="image/*" hidden />
+        <button id="uploadBtn" class="upload-btn">Upload Photo</button>
+      </div>
+
+      <!-- SIZE / LAYOUT -->
+      <div class="card">
+        <h4>Photo Dimensions & Layout</h4>
+
+        <div class="row">
+          <div class="field">
+            <label>Rows</label>
+            <input type="number" id="rows" value="2" min="1">
           </div>
-
-          <div class="row">
-            <div class="field">
-              <label>Rows</label>
-              <input type="number" id="rows" value="2" min="1" />
-            </div>
-            <div class="field">
-              <label>Columns</label>
-              <input type="number" id="cols" value="5" min="1" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="field">
-              <label>Background</label>
-              <input type="color" id="bgColor" value="#1e22c9" />
-            </div>
+          <div class="field">
+            <label>Columns</label>
+            <input type="number" id="cols" value="5" min="1">
           </div>
         </div>
 
-        <!-- Adjustment Section -->
-        <div class="card">
-          <h4>Adjust Photo</h4>
-
-          <div class="row">
-            <div class="field">
-              <label>Zoom</label>
-              <input
-                type="range"
-                id="zoom"
-                min="0.2"
-                max="4"
-                step="0.01"
-                value="1"
-              />
-            </div>
+        <div class="row">
+          <div class="field">
+            <label>Background</label>
+            <input type="color" id="bgColor" value="#1e22c9">
           </div>
-
-          <div class="row">
-            <div class="field">
-              <label>Move X</label>
-              <input type="range" id="offsetX" min="-400" max="400" value="0" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="field">
-              <label>Move Y</label>
-              <input
-                type="range"
-                id="offsetY"
-                min="-400"
-                max="1000"
-                value="-60"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Generate Button -->
-        <div class="card center">
-          <button id="generateBtn">Generate A4 Sheet</button>
         </div>
       </div>
 
-      <!-- Middle Column: Passport Preview -->
-      <div class="passport-preview">
-        <div class="card">
-          <h4>Passport Preview</h4>
+      <!-- ADJUST -->
+      <div class="card">
+        <h4>Adjust Photo</h4>
 
-          <div class="passport-frame">
-            <canvas id="passportPreview"></canvas>
+        <div class="row">
+          <div class="field">
+            <label>Zoom</label>
+            <input type="range" id="zoom" min="0.2" max="6" step="0.01" value="1">
           </div>
         </div>
 
-        <!-- NEW BUTTONS CARD -->
-        <div class="card">
-          <a id="download" download="passport_a4.png">Download A4 Sheet</a>
-          <button id="exportPdfBtn">Export PDF</button>
-          <!-- <button id="printPdfBtn">Print PDF</button> -->
+        <div class="row">
+          <div class="field">
+            <label>Move X</label>
+            <input type="range" id="offsetX" min="-600" max="600" value="0">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Move Y</label>
+            <input type="range" id="offsetY" min="-600" max="1200" value="-60">
+          </div>
         </div>
       </div>
+      <!-- Add Person Button -->
+<div class="card center">
+  <button id="addPersonBtn">Add Person to Sheet</button>
+</div>
 
-      <!-- Right Column: A4 Preview -->
-      <div class="a4-preview">
-        <div class="card">
-          <h4>A4 Preview</h4>
-          <canvas id="preview"></canvas>
-        </div>
+
+
+      
+
+      <!-- GENERATE -->
+      <div class="card center">
+        <button id="generateBtn">Generate A4 Sheet</button>
       </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="script.js"></script>
-  </body>
+    <!-- PREVIEW -->
+    <div class="passport-preview">
+      <div class="card">
+        <h4>Passport Preview</h4>
+        <div class="passport-frame">
+          <canvas id="passportPreview"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <a id="download" download="passport_a4.png">Download A4 Sheet</a>
+        <button id="exportPdfBtn">Export PDF</button>
+      </div>
+    </div>
+
+    <!-- A4 -->
+    <div class="a4-preview">
+      <div class="card">
+        <h4>A4 Preview</h4>
+        <canvas id="preview"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
 </html>

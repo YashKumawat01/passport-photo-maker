@@ -3,16 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <title>Passport Photo Tool</title>
+
+  <!-- REQUIRED FOR RESPONSIVE -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+
   <h2>Passport Photo Maker – A4 Sheet</h2>
 
+  <!-- MAIN LAYOUT -->
   <div class="main-container">
 
-    <!-- LEFT -->
-    <div class="controls">
+    <!-- LEFT / CONTROLS -->
+    <section class="controls">
 
       <!-- Upload -->
       <div class="upload-wrapper">
@@ -20,7 +26,7 @@
         <button id="uploadBtn" class="upload-btn">Upload Photo</button>
       </div>
 
-      <!-- SIZE / LAYOUT -->
+      <!-- Photo Dimensions -->
       <div class="card">
         <h4>Photo Dimensions & Layout</h4>
 
@@ -43,7 +49,7 @@
         </div>
       </div>
 
-      <!-- ADJUST -->
+      <!-- Adjust -->
       <div class="card">
         <h4>Adjust Photo</h4>
 
@@ -68,23 +74,17 @@
           </div>
         </div>
       </div>
-      <!-- Add Person Button -->
-<div class="card center">
-  <button id="addPersonBtn">Add Person to Sheet</button>
-</div>
 
+      <!-- Add Person -->
+      <div class="card center">
+        <button id="addPersonBtn">Add Person to Sheet</button>
+      </div>
 
+    </section>
 
-      
+    <!-- CENTER / PASSPORT PREVIEW -->
+    <section class="passport-preview">
 
-      <!-- GENERATE -->
-      <!-- <div class="card center"> -->
-        <!-- <button id="generateBtn">Generate A4 Sheet</button> -->
-      <!-- </div> -->
-    </div>
-
-    <!-- PREVIEW -->
-    <div class="passport-preview">
       <div class="card">
         <h4>Passport Preview</h4>
         <div class="passport-frame">
@@ -92,25 +92,27 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card center">
         <button id="generateBtn">Generate A4 Sheet</button>
-
         <a id="download" download="passport_a4.png">Download A4 Sheet</a>
         <button id="exportPdfBtn">Export PDF</button>
       </div>
-    </div>
 
-    <!-- A4 -->
-    <div class="a4-preview">
+    </section>
+
+    <!-- RIGHT / A4 PREVIEW -->
+    <section class="a4-preview">
       <div class="card">
         <h4>A4 Preview</h4>
         <canvas id="preview"></canvas>
       </div>
-    </div>
+    </section>
 
   </div>
 
+  <!-- LIBS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
+
 </body>
 </html>

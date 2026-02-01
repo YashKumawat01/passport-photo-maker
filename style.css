@@ -10,10 +10,10 @@
   --bg-main: linear-gradient(135deg, #0b0f19, #121826, #0b0f19);
   --bg-card: #141a2a;
 
-  --primary: #6366f1;       /* Indigo */
+  --primary: #6366f1;
   --primary-soft: #1e243a;
 
-  --accent: #10b981;        /* Emerald */
+  --accent: #10b981;
   --accent-soft: #06281f;
 
   --text-main: #e5e7eb;
@@ -24,12 +24,29 @@
   --radius: 14px;
 }
 
-/* ================= BODY ================= */
+/* ================= HTML + BODY (CRITICAL FIX) ================= */
+html,
+body {
+  min-height: 100vh;
+}
+
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   background: var(--bg-main);
-  padding: 24px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--text-main);
+  padding: 24px;
+}
+
+/* Mobile browser fix */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+    padding: 14px;
+  }
 }
 
 /* ================= HEADINGS ================= */
@@ -54,16 +71,13 @@ h4 {
   gap: 24px;
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* ================= CARD ================= */
 .card {
-  background: linear-gradient(
-    180deg,
-    #161d30,
-    #121826
-  );
+  background: linear-gradient(180deg, #161d30, #121826);
   border-radius: var(--radius);
   padding: 20px;
   border: 1px solid var(--border-soft);
@@ -184,6 +198,7 @@ canvas {
   background: #020617;
   border: 1px solid var(--border-soft);
   max-width: 100%;
+  height: auto;
 }
 
 /* ================= DOWNLOAD ================= */
@@ -208,19 +223,30 @@ a#download {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(
-    135deg,
-    #0f172a,
-    #020617
-  );
+  background: linear-gradient(135deg, #0f172a, #020617);
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= COLUMN FIX ================= */
+.controls,
+.passport-preview,
+.a4-preview {
+  flex: 1;
+  min-width: 280px;
+}
+
+/* ================= MOBILE ================= */
 @media (max-width: 900px) {
   .main-container {
     flex-direction: column;
   }
+
+  button,
+  a#download {
+    width: 100%;
+  }
 }
+
+/* ================= FINAL BUTTON STACK ================= */
 .passport-preview .card:last-child a,
 .passport-preview .card:last-child button {
   display: block;
@@ -232,32 +258,69 @@ a#download {
 .passport-preview .card:last-child button:last-child {
   margin-bottom: 0;
 }
-.passport-preview .card:last-child {
-  padding: 16px 20px;
-  background: #161d30; /* slightly lighter than main card */
-  border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-}
-.controls .card,
-.passport-preview .card,
-.a4-preview .card {
-  width: 100%;
-  margin-bottom: 20px; /* space between cards */
-  padding: 20px
-}
-.main-container {
-  display: flex;
-  gap: 24px;        /* space between columns */
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
 
-/* YOUR CSS IS KEPT AS-IS */
-/* Only small safe addition */
-
+/* ================= QUEUE BUTTON ================= */
 #addToQueueBtn {
   width: 100%;
   margin-top: 10px;
+}
+
+/* ================= MOBILE STACKED FLOW ================= */
+@media (max-width: 768px) {
+
+  /* Force single column */
+  .main-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Full width sections */
+  .controls,
+  .passport-preview,
+  .a4-preview {
+    width: 100%;
+  }
+
+  /* Reorder sections for mobile logic */
+  .controls {
+    order: 1;
+  }
+
+  .controls .upload-wrapper {
+    order: 1;
+  }
+
+  .controls .card:nth-of-type(1) {
+    order: 2; /* Photo Dimensions */
+  }
+
+  .controls .card:nth-of-type(2) {
+    order: 3; /* Adjustments */
+  }
+
+  #addToQueueBtn {
+    order: 4;
+  }
+
+  .passport-preview {
+    order: 5;
+  }
+
+  .passport-preview .card:first-child {
+    order: 5; /* Passport Preview */
+  }
+
+  .passport-preview .card:last-child {
+    order: 6; /* Generate / Download buttons */
+  }
+
+  .a4-preview {
+    order: 7;
+  }
+
+  /* Buttons breathe on mobile */
+  button,
+  a#download {
+    width: 100%;
+  }
 }

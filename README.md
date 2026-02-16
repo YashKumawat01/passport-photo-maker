@@ -95,4 +95,4 @@ Export as print-ready PDF or high-DPI images.
 
 This project is open-source and free to use.
 
-Kid, if you want to make this README pop even more, I can write a ready-to-paste markdown version with
+
